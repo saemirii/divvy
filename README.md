@@ -37,4 +37,4 @@ I am open to any suggestions and constructive criticism.
 
 ## License
 
-This project is licensed under MIT.
+This project is licensed under [MIT](https://github.com/carlosrrdev/divvy-legacy/blob/main/LICENSE).
