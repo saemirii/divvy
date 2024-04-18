@@ -6,6 +6,33 @@ export default {
   theme: {
     extend: {},
   },
+  daisyui: {
+    themes: [{
+      divvyLight: {
+        "primary": "#0034ff",
+        "secondary": "#09101c",
+        "accent": "#09101c",
+        "neutral": "#09101c",
+        "base-100": "#eceff4",
+        "info": "#6a96df",
+        "success": "#71cf71",
+        "warning": "#e1c170",
+        "error": "#ef5571",
+      },
+      divvyDark: {
+        "primary": "#440aef",
+        "secondary": "#a7a7c5",
+        "accent": "#27272e",
+        "neutral": "#060607",
+        "base-100": "#0d0d13",
+        "info": "#5c5cd5",
+        "success": "#6bd579",
+        "warning": "#dfb65f",
+        "error": "#ef395a",
+      }
+    },],
+    darkTheme: "divvyDark"
+  },
   plugins: [daisyui],
 }
 

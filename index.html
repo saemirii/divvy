@@ -5,11 +5,137 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HAX Stack Starter Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+  <title>Divvy</title>
 </head>
 <body>
-<div class="container mx-auto">
-  <h1>Hello world</h1>
+<div class="dv-wrapper">
+  <header>
+    <nav class="dv-container py-6 flex justify-between items-center">
+      <button>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37c1 .608 2.296.07 2.572-1.065"/>
+            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/>
+          </g>
+        </svg>
+      </button>
+      <p class="font-bold text-xl">Divvy</p>
+      <button>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8h16M4 16h16"/>
+        </svg>
+      </button>
+    </nav>
+  </header>
+  <main>
+    <div class="dv-container h-full grid grid-rows-[auto_auto_auto_1fr]">
+      <section class="flex justify-between mb-12">
+        <button class="btn btn-outline btn-secondary btn-disabled">Clear</button>
+        <button class="btn btn-outline btn-secondary" onclick="modal_what_is_divvy.showModal()">What is Divvy <span
+                class="text-lg">&#129300;</span></button>
+      </section>
+      <section class="flex justify-between mb-4">
+        <button class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0m8 12h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/>
+          </svg>
+          Add member
+        </button>
+        <button class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M12.5 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8H17.67a2 2 0 0 1 1.977 2.304l-.263 1.708M16 19h6m-3-3v6"/>
+              <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
+            </g>
+          </svg>
+          Add expense
+        </button>
+      </section>
+      <div class="divider"></div>
+      <section>
+        <div role="tablist" class="tabs h-full grid grid-rows-[auto_1fr] tabs-bordered">
+          <input type="radio" name="mem_exp" role="tab" class="tab" aria-label="Members" checked />
+          <div role="tabpanel" class="tab-content h-full border-accent rounded-lg p-6">Members</div>
+          <input type="radio" name="mem_exp" role="tab" class="tab" aria-label="Expenses" />
+          <div role="tabpanel" class="tab-content h-full bg-base-100 border-accent rounded-lg p-6">Expenses</div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="bg-neutral text-slate-200">
+    <div class="dv-container flex flex-col py-6">
+      <div class="flex mx-auto items-center mb-2 gap-x-2">
+        <a aria-label="github" role="img" href="https://github.com/carlosrrdev/divvy">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21"/>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m4 4l11.733 16H20L8.267 4zm0 16l6.768-6.768m2.46-2.46L20 4"/>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <path d="m3 7l9 6l9-6"/>
+            </g>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M3 14c.83.642 2.077 1.017 3.5 1c1.423.017 2.67-.358 3.5-1c.83-.642 2.077-1.017 3.5-1c1.423-.017 2.67.358 3.5 1M8 3a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2m4-4a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2"/>
+              <path d="M3 10h14v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/>
+              <path d="M16.746 16.726a3 3 0 1 0 .252-5.555"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div class="flex flex-col items-center">
+        <small>Made with <span class="text-success">&hearts;</span> by <a class="link" href="https://crr.codes"
+                                                                          target="_blank">Carlos Rodriguez</a></small>
+        <small class="font-bold">Divvy &copy; 2024</small>
+      </div>
+    </div>
+  </footer>
+  <div id="dv-dialog-container" class="contents">
+    <dialog id="modal_what_is_divvy" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">What is Divvy?</h3>
+        <p class="py-4">
+          Divvy is a group expense tracker and splitter.
+        </p>
+        <p class="py-4 leading-relaxed">
+          Get started by adding participating members. Then add
+          expenses and their amounts. Finally, decide if you want to split total expenses evenly or assign
+          specific expenses to individual members.
+        </p>
+        <p class="py-4 leading-relaxed">
+          That's it! Divvy will then generate a detailed report that shows exactly how much each member is paying.
+          Results can be saved locally on your browser for easy reference later!
+        </p>
+        <p class="py-4 leading-relaxed">
+          Please feel free to <a class="link" href="mailto:contact@crr.codes">contact me</a> if you want to suggest
+          additional features or to report any bugs!
+        </p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-secondary">I understand!</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </div>
 </div>
 <script src="/app.js" type="module"></script>
 </body>
