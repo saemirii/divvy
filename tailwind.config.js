@@ -15,7 +15,7 @@ export default {
         "neutral": "#09101c",
         "base-100": "#eceff4",
         "info": "#6a96df",
-        "success": "#71cf71",
+        "success": "#4aa84a",
         "warning": "#e1c170",
         "error": "#ef5571",
       },
@@ -26,9 +26,9 @@ export default {
         "neutral": "#060607",
         "base-100": "#0d0d13",
         "info": "#5c5cd5",
-        "success": "#6bd579",
+        "success": "#7cc386",
         "warning": "#dfb65f",
-        "error": "#ef395a",
+        "error": "#ed5671",
       }
     },],
     darkTheme: "divvyDark"
