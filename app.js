@@ -2,7 +2,7 @@ import "./style.css";
 import Alpine from 'alpinejs';
 import "htmx.org";
 import {nanoid} from "nanoid";
-import {capitalizeFirstLetter} from "./util.js";
+import {capitalizeFirstLetter, roundUpToNearest} from "./util.js";
 
 /**
  * @typedef {import('./types.js').Divvy} Divvy
@@ -103,6 +103,23 @@ Alpine.store('divvy', {
     this.swapTimeoutId = setTimeout(() => {
       this.isSwapVisible = false;
     }, 3000)
+  },
+
+  calcExpenseTotal() {
+    let total = 0;
+    this.expenses.forEach(expense => {
+      total += expense.amount;
+    });
+    return roundUpToNearest(total);
+  },
+
+  reset() {
+    this.members = [];
+    this.expenses = [];
+    this.isSwapVisible = false
+    this.isSwapError = false
+    this.swapText = ""
+    document.getElementById('modal_clear').close()
   }
 
 })

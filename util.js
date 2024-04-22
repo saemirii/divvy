@@ -7,3 +7,13 @@
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+/**
+ * Rounds up a number to the nearest hundredth.
+ *
+ * @param {number} num - The number to round up.
+ * @return {number} The rounded-up number.
+ */
+export function roundUpToNearest(num) {
+  return Math.ceil(num * 100) / 100;
+}
