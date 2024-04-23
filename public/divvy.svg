@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN">
+<svg width="100%" height="100%" viewBox="0 0 80 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-30.8449,-9.53667)">
+        <g id="box.afdesign" transform="matrix(0.186875,0,0,0.186875,45.2758,24.5367)">
+            <g transform="matrix(1,0,0,1,-75,-75)">
+                <g transform="matrix(1.49785,0,0,1.49785,-68.5125,-38.3621)">
+                    <path d="M95.812,33.201L132.603,54.442L132.603,96.924L95.812,118.165L59.022,96.924L59.022,54.442L95.812,33.201Z" style="fill:none;stroke:currentColor;stroke-width:6.68px;"/>
+                </g>
+                <g transform="matrix(1.49785,0,0,1.49785,-68.5125,-38.3621)">
+                    <path d="M95.812,33.201L132.603,54.442L95.812,75.683L59.022,54.442L95.812,33.201Z" style="fill:none;stroke:currentColor;stroke-width:6.68px;"/>
+                </g>
+                <path d="M75,11.368L75,75" style="fill:none;stroke:currentColor;stroke-width:10px;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.6571,0,0,1.6571,-60.2861,-11.7296)">
+            <text x="70.084px" y="26.123px" style="font-family:'ArchivoRoman-Black', 'Archivo';font-weight:600;font-size:12px;">Divvy</text>
+        </g>
+    </g>
+</svg>
