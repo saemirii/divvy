@@ -2,6 +2,8 @@ import "./style.css";
 import Alpine from 'alpinejs';
 import "htmx.org";
 import {nanoid} from "nanoid";
+import {format} from "date-fns";
+import localforage from "localforage";
 import {capitalizeFirstLetter, roundUpToNearest} from "./util.js";
 
 /**
@@ -10,7 +12,12 @@ import {capitalizeFirstLetter, roundUpToNearest} from "./util.js";
 
 window.Alpine = Alpine;
 
-// Alpine.data()
+localforage.config({
+  name: "divvy",
+  storeName: "divvy_lf_ls",
+  description: "Local db for Divvy"
+})
+
 Alpine.store('divvy', {
   members: /** @type {Array<Divvy.Member>} */ [],
   expenses: /** @type {Array<Divvy.Expense>} */ [],
@@ -19,6 +26,8 @@ Alpine.store('divvy', {
   isSwapError: false,
   swapText: "",
   swapTimeoutId: null,
+
+  saved: false,
 
   /**
    * Returns an array containing all members.
@@ -113,15 +122,45 @@ Alpine.store('divvy', {
     return roundUpToNearest(total);
   },
 
+  async saveLocal() {
+    const newSaveObj = {
+      members: this.members,
+      expenses: this.expenses,
+      date: format(new Date(), "P")
+    }
+    const oldArr = await localforage.getItem('divvy-ls');
+    if (!oldArr || oldArr.length < 1) {
+      await localforage.setItem('divvy-ls', JSON.stringify([newSaveObj]))
+    } else {
+      await localforage.setItem('divvy-ls', JSON.stringify([...JSON.parse(oldArr), newSaveObj]))
+    }
+    this.saved = true;
+  },
+
   reset() {
     this.members = [];
     this.expenses = [];
     this.isSwapVisible = false
     this.isSwapError = false
     this.swapText = ""
+    this.saved = false;
     document.getElementById('modal_clear').close()
   }
 
+})
+
+Alpine.store('ls', {
+  savedDivvies: [],
+
+
+  async updateLocal() {
+    const ls = await localforage.getItem('divvy-ls');
+    if (!ls) {
+      return;
+    }
+    this.savedDivvies = JSON.parse(ls);
+    console.log(this.savedDivvies)
+  }
 })
 
 Alpine.start();
