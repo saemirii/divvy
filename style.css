@@ -17,8 +17,6 @@
     }
 }
 
-@layer utilities {
-    :root:has(:is(.modal-open,.modal-target,.modal-toggle:checked+.modal,.modal[open])) {
-        scrollbar-gutter: auto;
-    }
+:root:has(:is(.modal-open,.modal-target,.modal-toggle:checked+.modal,.modal[open])) {
+    scrollbar-gutter: auto !important;
 }
