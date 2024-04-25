@@ -126,6 +126,7 @@ Alpine.store('divvy', {
     const newSaveObj = {
       members: this.members,
       expenses: this.expenses,
+      id: nanoid(4),
       date: format(new Date(), "P")
     }
     const oldArr = await localforage.getItem('divvy-ls');
@@ -152,6 +153,10 @@ Alpine.store('divvy', {
 Alpine.store('ls', {
   savedDivvies: [],
 
+  selectedMembers: [],
+  selectedExpenses: [],
+  selectedDate: [],
+
 
   async updateLocal() {
     const ls = await localforage.getItem('divvy-ls');
@@ -159,7 +164,18 @@ Alpine.store('ls', {
       return;
     }
     this.savedDivvies = JSON.parse(ls);
-    console.log(this.savedDivvies)
+  },
+
+  loadDivvy(id) {
+    const divvy = this.savedDivvies.find(divvy => divvy.id === id);
+    this.selectedMembers = divvy.members;
+    this.selectedExpenses = divvy.expenses;
+    this.selectedDate = divvy.id;
+  },
+
+  async resetLocal() {
+    this.savedDivvies = [];
+    await localforage.removeItem('divvy-ls')
   }
 })
 

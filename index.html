@@ -17,7 +17,8 @@
   <header x-data>
     <nav class="dv-container py-6 flex justify-between items-center">
       <div class="flex items-center">
-        <button @click="await $store.ls.updateLocal()" onclick="modal_ls.showModal()" class="btn btn-sm md:btn-md btn-ghost">
+        <button @click="await $store.ls.updateLocal()" onclick="modal_ls.showModal()"
+                class="btn btn-sm md:btn-md btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2m2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8m-9 4h4"/>
@@ -419,7 +420,8 @@
           </template>
         </ul>
         <div class="modal-action">
-          <button :class="$store.divvy.saved? 'btn-disabled': ''" @click="await $store.divvy.saveLocal()" class="btn btn-outline btn-success">
+          <button :class="$store.divvy.saved? 'btn-disabled': ''" @click="await $store.divvy.saveLocal()"
+                  class="btn btn-outline btn-success">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M13.5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7.5M7 20h5m-3-4v4m10-4v6m3-3l-3 3l-3-3"/>
@@ -435,19 +437,23 @@
     <dialog x-data id="modal_ls" class="modal">
       <div class="modal-box lg:w-11/12 lg:max-w-5xl">
         <h3 class="font-bold text-lg lg:text-2xl">Saved Divvies</h3>
-        <ul>
+        <ul class="flex flex-col gap-y-2 mt-4">
           <template x-for="divvy in $store.ls.savedDivvies">
-            <li class="flex flex-col gap-y-2">
-              <p class="font-bold text-lg" x-text="divvy.date"></p>
-              <ul>
-                <template x-for="member in divvy.members">
-                  <li x-text="member.name"></li>
-                </template>
-              </ul>
+            <li>
+              <button @click="$store.ls.loadDivvy(divvy.id)" onclick="modal_ls_divvy.showModal()" class="btn btn-outline btn-sm btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm4 2h6m-6 4h6m-6 4h4"/>
+                </svg>
+                <span class="font-bold text-lg" x-text="divvy.date"></span>
+              </button>
             </li>
           </template>
         </ul>
-        <div class="modal-action">
+        <div class="modal-action justify-between">
+          <button @click="$store.ls.resetLocal()" class="btn btn-outline btn-error">
+            Clear all
+          </button>
           <form method="dialog">
             <button class="btn">Close</button>
           </form>
@@ -463,6 +469,16 @@
           <button @click="$store.divvy.reset()" class="btn btn-outline btn-error">Clear data</button>
           <form method="dialog">
             <button class="btn btn-outline">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_ls_divvy" class="modal">
+      <div class="modal-box">
+        <h3 x-text="$store.ls.selectedDate"></h3>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
           </form>
         </div>
       </div>
