@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+  <title>Divvy</title>
+</head>
+<body>
+<div class="dv-wrapper">
+  <header x-data>
+    <nav class="dv-container py-6 flex justify-between items-center">
+      <div class="flex items-center">
+        <button @click="await $store.ls.updateLocal()" onclick="modal_ls.showModal()"
+                class="btn btn-sm md:btn-md btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2m2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8m-9 4h4"/>
+          </svg>
+          <span class="hidden md:inline">
+            View Saved
+          </span>
+        </button>
+      </div>
+      <div class="flex items-center">
+        <svg class="w-8 h-8" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.32558,0,0,1.32558,-17.7904,-24.4183)">
+        <g transform="matrix(1,0,0,1,-15.6772,-4.70799)">
+            <path d="M86.462,39.149L40.118,39.149L80.677,79.708L40.118,120.267L86.443,120.267L121.236,79.708L86.462,39.149Z"
+                  style="fill:none;stroke:rgb(7,7,255);stroke-width:11.32px;stroke-linecap:round;stroke-miterlimit:1.5;"/>
+        </g>
+      <g transform="matrix(1,0,0,1,-10.6772,-4.70799)">
+            <path d="M86.462,39.149L40.118,39.149L80.677,79.708L40.118,120.267L86.443,120.267L121.236,79.708L86.462,39.149Z"
+                  style="fill:none;stroke:rgb(127,7,255);stroke-width:11.32px;stroke-linecap:round;stroke-miterlimit:1.5;"/>
+        </g>
+      <g transform="matrix(1,0,0,1,-5.67722,-4.70799)">
+            <path d="M86.462,39.149L40.118,39.149L80.677,79.708L40.118,120.267L86.443,120.267L121.236,79.708L86.462,39.149Z"
+                  style="fill:none;stroke:currentColor;stroke-width:11.32px;stroke-linecap:round;stroke-miterlimit:1.5;"/>
+        </g>
+    </g>
+</svg>
+        <p class="font-bold text-2xl">Divvy</p>
+      </div>
+      <button class="btn btn-sm md:btn-md btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M9 8V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-2"/>
+            <path d="M3 12h13l-3-3m0 6l3-3"/>
+          </g>
+        </svg>
+        <span class="hidden md:inline">Login</span>
+      </button>
+    </nav>
+  </header>
+  <main>
+    <div class="dv-container h-full grid grid-rows-[auto_auto_auto_1fr]">
+      <section x-data class="flex justify-between mb-12">
+        <button onclick="modal_clear.showModal()"
+                :class="$store.divvy.members.length >= 1 || $store.divvy.expenses.length >= 1? '': 'btn-disabled'"
+                class="btn btn-outline btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4m-4 4a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4m-4-6v3m0 3h.01"/>
+          </svg>
+          Clear
+        </button>
+        <!--        <button @click="console.log($store.divvy.getAllMembers())" class="btn btn-error">debug</button>-->
+        <button class="btn btn-outline btn-secondary" onclick="modal_what_is_divvy.showModal()">
+          <span class="text-lg">&#129300;</span>
+          What is Divvy
+        </button>
+      </section>
+      <section x-data class="flex justify-between md:justify-start md:gap-x-4">
+        <button onclick="modal_add_member.showModal()" class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0m8 12h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/>
+          </svg>
+          Add member
+        </button>
+        <button onclick="modal_add_expense.showModal()" class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M12.5 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8H17.67a2 2 0 0 1 1.977 2.304l-.263 1.708M16 19h6m-3-3v6"/>
+              <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
+            </g>
+          </svg>
+          Add expense
+        </button>
+        <button onclick="modal_split.showModal()"
+                :class="$store.divvy.members.length >= 2 && $store.divvy.expenses.length >= 1? '' : 'btn-disabled'"
+                class="btn btn-secondary hidden md:inline-flex md:ml-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 21L21 3m-6 11l3 4.5m3-4.5l-4.5 7M3 4l6 6m-6 0l6-6"/>
+          </svg>
+          Split evenly
+        </button>
+        <button class="btn btn-primary btn-disabled hidden md:inline-flex lg:btn-wide">
+          <span class="text-xl">&#127881;</span>
+          Divvy Up!
+        </button>
+      </section>
+      <div class="divider"></div>
+      <section class="lg:hidden">
+        <div role="tablist" class="tabs h-full grid grid-rows-[auto_1fr] tabs-bordered">
+          <input type="radio" name="mem_exp" role="tab" class="tab" aria-label="Members" checked/>
+          <div role="tabpanel" class="tab-content h-full border-accent rounded-lg rounded-tl-none">
+            <ul class="py-2" x-data>
+              <template x-for="member in $store.divvy.members">
+                <li class="flex text-sm justify-between items-center p-2 border-b border-base-200 last-of-type:border-none">
+                  <span class="px-3" x-text="member.name"></span>
+                  <button @click="$store.divvy.removeMember(member.id)" class="btn btn-sm btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                    </svg>
+                  </button>
+                </li>
+              </template>
+            </ul>
+          </div>
+          <input type="radio" name="mem_exp" role="tab" class="tab" aria-label="Expenses"/>
+          <div role="tabpanel" class="tab-content h-full bg-base-100 border-accent rounded-lg rounded-tl-none">
+            <ul class="py-2" x-data>
+              <template x-for="expense in $store.divvy.expenses">
+                <li class="flex text-sm justify-between items-center p-2 border-b border-base-200 last-of-type:border-none">
+                  <span class="px-3" x-text="expense.title"></span>
+                  <div class="flex items-center gap-x-6">
+                    <span x-text="`$${expense.amount}`"></span>
+                    <button @click="$store.divvy.removeExpense(expense.id)" class="btn btn-sm btn-ghost">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="hidden mt-6 lg:grid lg:grid-cols-2 lg:gap-x-20">
+        <div class="overflow-x-auto">
+          <h3 class="font-bold text-xl my-8">Members</h3>
+          <table x-data class="table">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="(member, index) in $store.divvy.members">
+              <tr class="hover">
+                <th x-text="index + 1"></th>
+                <td x-text="member.name"></td>
+                <td>
+                  <button @click="$store.divvy.removeMember(member.id)" class="btn btn-sm btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </template>
+            </tbody>
+          </table>
+        </div>
+        <div class="overflow-x-auto">
+          <h3 class="font-bold text-xl my-8">Expenses</h3>
+          <table x-data class="table">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="(expense, index) in $store.divvy.expenses">
+              <tr class="hover">
+                <th x-text="index + 1"></th>
+                <td x-text="expense.title"></td>
+                <td x-text="`$${expense.amount}`"></td>
+                <td>
+                  <button @click="$store.divvy.removeExpense(expense.id)" class="btn btn-sm btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </template>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section x-data class="flex md:hidden mt-4 gap-x-2">
+        <button onclick="modal_split.showModal()"
+                :class="$store.divvy.members.length >=2 && $store.divvy.expenses.length >=1? '' : 'btn-disabled'"
+                class="btn flex-1 btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 21L21 3m-6 11l3 4.5m3-4.5l-4.5 7M3 4l6 6m-6 0l6-6"/>
+          </svg>
+          Split evenly
+        </button>
+        <button class="btn btn-primary flex-1 btn-disabled">
+          <span class="text-xl">&#127881;</span>
+          Divvy Up!
+        </button>
+      </section>
+    </div>
+  </main>
+  <footer class="bg-neutral text-slate-200">
+    <div class="dv-container flex flex-col py-6">
+      <div class="flex mx-auto items-center mb-2 gap-x-2">
+        <a aria-label="github" role="img" href="https://github.com/carlosrrdev/divvy">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21"/>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m4 4l11.733 16H20L8.267 4zm0 16l6.768-6.768m2.46-2.46L20 4"/>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <path d="m3 7l9 6l9-6"/>
+            </g>
+          </svg>
+        </a>
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M3 14c.83.642 2.077 1.017 3.5 1c1.423.017 2.67-.358 3.5-1c.83-.642 2.077-1.017 3.5-1c1.423-.017 2.67.358 3.5 1M8 3a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2m4-4a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2"/>
+              <path d="M3 10h14v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/>
+              <path d="M16.746 16.726a3 3 0 1 0 .252-5.555"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div class="flex flex-col items-center md:flex-row gap-x-4 md:justify-center">
+        <small>Made with <span class="text-success">&hearts;</span> by
+          <a class="link" href="https://crr.codes" target="_blank">Carlos Rodriguez</a>
+        </small>
+        <small class="font-bold">Divvy &copy; 2024</small>
+      </div>
+    </div>
+  </footer>
+  <div id="dv-dialog-container" class="contents">
+    <dialog id="modal_what_is_divvy" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">What is Divvy?</h3>
+        <p class="py-4">
+          Divvy is a group expense tracker and splitter.
+        </p>
+        <p class="py-4 leading-relaxed">
+          Get started by adding participating members. Then add
+          expenses and their amounts. Finally, decide if you want to split total expenses evenly or assign
+          specific expenses to individual members.
+        </p>
+        <p class="py-4 leading-relaxed">
+          That's it! Divvy will then generate a detailed report that shows exactly how much each member is paying.
+          Results can be saved locally on your browser for easy reference later!
+        </p>
+        <p class="py-4 leading-relaxed">
+          Please feel free to <a class="underline" href="mailto:contact@crr.codes">contact me</a> if you want to suggest
+          additional features or to report any bugs!
+        </p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-secondary">I understand!</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_add_member" class="modal">
+      <div class="modal-box md:w-10/12 md:max-w-xl">
+        <h3 class="font-bold text-xl">Add new member</h3>
+        <small class="py-4">Use the form below to add a new participating member</small>
+        <form @submit.prevent="$store.divvy.addNewMember($refs.dv_member_input)"
+              class="my-6 flex flex-col md:flex-row md:items-center md:gap-x-6">
+          <label class="input input-bordered flex items-center gap-2 md:w-3/4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0m8 12h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/>
+            </svg>
+            <input x-ref="dv_member_input" type="text" class="grow" required placeholder="Member name"/>
+          </label>
+          <button class="btn btn-secondary mt-4 md:mt-0 grow">Add member</button>
+        </form>
+        <div x-data x-ref="dv_swap" class="text-sm min-h-12">
+          <div x-show="$store.divvy.isSwapVisible && !$store.divvy.isSwapError" x-transition
+               class="text-success flex justify-center items-center p-2 rounded-sm gap-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
+                <path d="m9 12l2 2l4-4"/>
+              </g>
+            </svg>
+            <span x-text="`${$store.divvy.swapText} added to members!`"></span>
+          </div>
+          <div x-show="$store.divvy.isSwapVisible && $store.divvy.isSwapError" x-transition
+               class="text-error flex justify-center items-center p-2 rounded-sm gap-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m7-2l4 4m0-4l-4 4"/>
+            </svg>
+            <span>Please enter a valid name</span>
+          </div>
+
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-outline btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_add_expense" class="modal">
+      <div class="modal-box md:w-10/12 md:max-w-xl">
+        <h3 class="font-bold text-xl">Add new expense</h3>
+        <small class="py-4">Use the form below to add a new expense</small>
+        <form @submit.prevent="$store.divvy.addNewExpense($refs.dv_exp_title_input, $refs.dv_exp_amount_input)"
+              class="my-6 flex flex-col gap-y-2">
+          <div class="flex flex-col gap-y-2 md:flex-row md:gap-x-2">
+            <label class="input input-bordered flex items-center gap-2 md:w-3/4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M12.5 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8H17.67a2 2 0 0 1 1.977 2.304l-.263 1.708M16 19h6m-3-3v6"/>
+                  <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
+                </g>
+              </svg>
+              <input x-ref="dv_exp_title_input" type="text" class="grow" required placeholder="Expense title"/>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 md:w-3/4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M16.7 8A3 3 0 0 0 14 6h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1-2.7-2M12 3v3m0 12v3"/>
+              </svg>
+              <input x-ref="dv_exp_amount_input" type="number" step="0.01" class="grow" required/>
+            </label>
+          </div>
+          <button class="btn btn-secondary mt-4 md:mt-0">Add expense</button>
+        </form>
+        <div x-data x-ref="dv_swap" class="text-sm min-h-12">
+          <div x-show="$store.divvy.isSwapVisible && !$store.divvy.isSwapError" x-transition
+               class="text-success flex justify-center items-center p-2 rounded-sm gap-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
+                <path d="m9 12l2 2l4-4"/>
+              </g>
+            </svg>
+            <span x-text="`${$store.divvy.swapText} added to expenses!`"></span>
+          </div>
+          <div x-show="$store.divvy.isSwapVisible && $store.divvy.isSwapError" x-transition
+               class="text-error flex justify-center items-center p-2 rounded-sm gap-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m7-2l4 4m0-4l-4 4"/>
+            </svg>
+            <span>Please enter a valid title and amount</span>
+          </div>
+
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-outline btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="modal_split" class="modal" x-data>
+      <div class="modal-box">
+        <h3 class="font-bold text-xl">Splitting evenly</h3>
+        <ul class="my-4 border-y py-2 border-dashed border-base-200 dark:border-secondary">
+          <template x-for="expense in $store.divvy.expenses">
+            <li class="flex justify-between border-b py-1 border-accent last-of-type:border-none">
+              <span x-text="expense.title"></span>
+              <span x-text="`$${expense.amount}`"></span>
+            </li>
+          </template>
+        </ul>
+        <p class="font-bold flex justify-between">
+          <span>Expense total:</span>
+          <span class="text-error" x-text="`$${$store.divvy.calcExpenseTotal()}`"></span>
+        </p>
+        <ul class="my-4 border-y py-2 border-dashed border-base-200 dark:border-secondary">
+          <template x-for="member in $store.divvy.members">
+            <li class="font-bold flex justify-between border-b py-1 border-accent last-of-type:border-none">
+              <span x-text="member.name"></span>
+              <span class="text-success"
+                    x-text="`$${Math.ceil(($store.divvy.calcExpenseTotal()/$store.divvy.members.length) * 100) / 100}`"></span>
+            </li>
+          </template>
+        </ul>
+        <div class="modal-action">
+          <button :class="$store.divvy.saved? 'btn-disabled': ''" @click="await $store.divvy.saveLocal()"
+                  class="btn btn-outline btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7.5M7 20h5m-3-4v4m10-4v6m3-3l-3 3l-3-3"/>
+            </svg>
+            <span x-text="$store.divvy.saved? 'Saved!': 'Save locally'"></span>
+          </button>
+          <form method="dialog">
+            <button class="btn btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_ls" class="modal">
+      <div class="modal-box lg:w-11/12 lg:max-w-5xl">
+        <h3 class="font-bold text-lg lg:text-2xl">Saved Divvies</h3>
+        <ul class="flex flex-col gap-y-2 mt-4">
+          <template x-for="divvy in $store.ls.savedDivvies">
+            <li>
+              <button @click="$store.ls.loadDivvy(divvy.id)" onclick="modal_ls_divvy.showModal()" class="btn btn-outline btn-sm btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm4 2h6m-6 4h6m-6 4h4"/>
+                </svg>
+                <span class="font-bold text-lg" x-text="divvy.date"></span>
+              </button>
+            </li>
+          </template>
+        </ul>
+        <div class="modal-action justify-between">
+          <button @click="$store.ls.resetLocal()" class="btn btn-outline btn-error">
+            Clear all
+          </button>
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_clear" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-xl">Clear current session</h3>
+        <p class="pt-4">This will reset all forms and any data associated with them.</p>
+        <p class="text-error pb-4">This action cannot be undone!</p>
+        <div class="modal-action">
+          <button @click="$store.divvy.reset()" class="btn btn-outline btn-error">Clear data</button>
+          <form method="dialog">
+            <button class="btn btn-outline">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog x-data id="modal_ls_divvy" class="modal">
+      <div class="modal-box">
+        <h3 x-text="$store.ls.selectedDate"></h3>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</div>
+<script src="/app.js" type="module"></script>
+</body>
+</html>

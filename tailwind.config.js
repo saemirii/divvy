@@ -2,7 +2,7 @@ import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./app.js", "./src/**/*.js"],
+  content: ["./index.html", "./partials/**/*.html", "./app.js", "./src/**/*.js"],
   theme: {
     extend: {},
   },
@@ -13,7 +13,7 @@ export default {
         "secondary": "#09101c",
         "accent": "#09101c",
         "neutral": "#09101c",
-        "base-100": "#eceff4",
+        "base-100": "#f8fbff",
         "info": "#6a96df",
         "success": "#4aa84a",
         "warning": "#e1c170",
