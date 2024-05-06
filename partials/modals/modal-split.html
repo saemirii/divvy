@@ -1,58 +1,67 @@
-<dialog id="modal_split" class="modal">
+<dialog x-data id="modal_split" class="modal">
   <div class="modal-box w-11/12 max-w-7xl">
     <h3 class="text-2xl dv-font-heading text-center">
       Split evenly
     </h3>
     <div class="flex flex-col md:grid md:grid-cols-2">
       <div>
-        <form @submit.prevent="$store.divvy.addNewMember($refs.dv_member_input)"
-              class="my-6 flex flex-col md:flex-row md:items-center md:gap-x-6">
-          <label class="input input-bordered flex items-center gap-2 md:w-3/4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+
+        <form @submit.prevent="$store.dv_split.addNewMember($refs.dv_member_input)" class="my-6 flex flex-col md:flex-row md:items-center md:gap-x-6">
+          <label class="input input-bordered flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0m8 12h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/>
             </svg>
             <input x-ref="dv_member_input" type="text" class="grow" required placeholder="Member name"/>
           </label>
-          <div class="mt-4 flex gap-x-2">
+          <div class="mt-4 md:mt-0 flex gap-x-2">
             <button class="btn btn-secondary grow">Add member</button>
-            <button class="btn btn-outline btn-secondary grow">View members</button>
+            <button class="btn btn-outline md:hidden btn-secondary grow">
+              <span>View members</span>
+              <span x-text="$store.dv_split.members.length" class="badge badge-secondary"></span>
+            </button>
           </div>
         </form>
+
         <div class="divider"></div>
-        <form @submit.prevent="$store.divvy.addNewExpense($refs.dv_exp_title_input, $refs.dv_exp_amount_input)"
-              class="my-6 flex flex-col gap-y-2">
+
+        <form @submit.prevent="$store.dv_split.addNewExpense($refs.dv_exp_name_input, $refs.dv_exp_amount_input)" class="my-6 flex flex-col gap-y-2">
           <div class="flex flex-col gap-y-2 md:flex-row md:gap-x-2">
-            <label class="input input-bordered flex items-center gap-2 md:w-3/4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <label class="input input-bordered flex items-center md:w-1/2 gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                   <path d="M12.5 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8H17.67a2 2 0 0 1 1.977 2.304l-.263 1.708M16 19h6m-3-3v6"/>
                   <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
                 </g>
               </svg>
-              <input x-ref="dv_exp_title_input" type="text" class="grow" required placeholder="Expense title"/>
+              <input x-ref="dv_exp_name_input" type="text" class="grow" required placeholder="Expense title"/>
             </label>
-            <label class="input input-bordered flex items-center gap-2 md:w-3/4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+            <label class="input input-bordered flex items-center md:w-1/2 gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M16.7 8A3 3 0 0 0 14 6h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1-2.7-2M12 3v3m0 12v3"/>
               </svg>
               <input x-ref="dv_exp_amount_input" type="number" step="0.01" class="grow" required/>
             </label>
           </div>
-          <div class="mt-4 flex gap-x-2">
+          <div class="mt-4 md:mt-0 flex gap-x-2">
             <button class="btn btn-secondary grow">Add expense</button>
-            <button class="btn btn-outline btn-secondary grow">View expenses</button>
+            <button class="btn btn-outline btn-secondary md:hidden grow">
+              <span>View expenses</span>
+              <span x-text="$store.dv_split.expenses.length" class="badge badge-secondary"></span>
+            </button>
           </div>
         </form>
-        <div class="divider"></div>
-        <button class="btn btn-secondary w-full">Show results</button>
+
+        <div class="divider md:hidden"></div>
+
+        <button @click="$store.dv_split.sayHello()" class="btn btn-primary w-full md:hidden">View Split Results</button>
       </div>
       <div></div>
     </div>
     <div class="modal-action">
       <form method="dialog">
-        <button class="btn btn-outline">Close</button>
+        <button class="btn btn-outline btn-secondary">Close</button>
       </form>
     </div>
   </div>
