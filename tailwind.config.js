@@ -9,26 +9,26 @@ export default {
   daisyui: {
     themes: [{
       divvyLight: {
-        "primary": "#0034ff",
+        "primary": "#074efd",
         "secondary": "#09101c",
-        "accent": "#09101c",
+        "accent": "#3e434d",
         "neutral": "#09101c",
         "base-100": "#f8fbff",
-        "info": "#6a96df",
-        "success": "#4aa84a",
+        "info": "#45cbf3",
+        "success": "#93d293",
         "warning": "#e1c170",
-        "error": "#ef5571",
+        "error": "#ef4764",
       },
       divvyDark: {
         "primary": "#9a96d7",
         "secondary": "#c0bedc",
-        "accent": "#27272e",
+        "accent": "#a4a4e7",
         "neutral": "#060607",
         "base-100": "#121219",
         "info": "#9a96d7",
-        "success": "#7cc386",
+        "success": "#548f4f",
         "warning": "#dfb65f",
-        "error": "#ed5671",
+        "error": "#cb4b62",
       }
     },],
     darkTheme: "divvyDark"

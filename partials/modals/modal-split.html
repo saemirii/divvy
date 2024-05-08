@@ -1,22 +1,26 @@
 <dialog x-data id="modal_split" class="modal">
   <div class="modal-box w-11/12 max-w-7xl">
-    <h3 class="text-2xl dv-font-heading text-center">
+    <h3 class="text-2xl md:text-3xl lg:text-4xl mb-4 dv-font-heading text-center">
       Split evenly
     </h3>
-    <div class="flex flex-col md:grid md:grid-cols-2">
+    <div role="alert" class="h-6 my-4">
+      <p x-transition x-show="$store.dv_split.isAlertVisible" id="split_alert" x-text="$store.dv_split.alertText"
+         class="rounded text-center"></p>
+    </div>
+    <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-4 lg:gap-x-8 xl:gap-x-14">
       <div>
-
-        <form @submit.prevent="$store.dv_split.addNewMember($refs.dv_member_input)" class="my-6 flex flex-col md:flex-row md:items-center md:gap-x-6">
+        <form @submit.prevent="$store.dv_split.addNewMember($refs.dv_member_input)"
+              class="flex flex-col gap-y-4">
           <label class="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden xl:block" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0m8 12h6m-3-3v6M6 21v-2a4 4 0 0 1 4-4h4"/>
             </svg>
             <input x-ref="dv_member_input" type="text" class="grow" required placeholder="Member name"/>
           </label>
-          <div class="mt-4 md:mt-0 flex gap-x-2">
-            <button class="btn btn-secondary grow">Add member</button>
-            <button class="btn btn-outline md:hidden btn-secondary grow">
+          <div class="mt-4 md:mt-0 grid grid-cols-[auto_1fr] md:grid-cols-2 gap-x-2">
+            <button class="btn btn-secondary">Add member</button>
+            <button @click.prevent onclick="modal_members.showModal()" class="btn btn-outline btn-accent">
               <span>View members</span>
               <span x-text="$store.dv_split.members.length" class="badge badge-secondary"></span>
             </button>
@@ -25,10 +29,11 @@
 
         <div class="divider"></div>
 
-        <form @submit.prevent="$store.dv_split.addNewExpense($refs.dv_exp_name_input, $refs.dv_exp_amount_input)" class="my-6 flex flex-col gap-y-2">
-          <div class="flex flex-col gap-y-2 md:flex-row md:gap-x-2">
-            <label class="input input-bordered flex items-center md:w-1/2 gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+        <form @submit.prevent="$store.dv_split.addNewExpense($refs.dv_exp_name_input, $refs.dv_exp_amount_input)"
+              class="flex flex-col gap-y-4">
+          <div class="flex flex-col gap-y-2 md:grid md:grid-cols-2 md:gap-x-2">
+            <label class="input input-bordered flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden xl:block" viewBox="0 0 24 24">
                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                   <path d="M12.5 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8H17.67a2 2 0 0 1 1.977 2.304l-.263 1.708M16 19h6m-3-3v6"/>
                   <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
@@ -36,17 +41,17 @@
               </svg>
               <input x-ref="dv_exp_name_input" type="text" class="grow" required placeholder="Expense title"/>
             </label>
-            <label class="input input-bordered flex items-center md:w-1/2 gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+            <label class="input input-bordered flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden xl:block" viewBox="0 0 24 24">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M16.7 8A3 3 0 0 0 14 6h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1-2.7-2M12 3v3m0 12v3"/>
               </svg>
               <input x-ref="dv_exp_amount_input" type="number" step="0.01" class="grow" required/>
             </label>
           </div>
-          <div class="mt-4 md:mt-0 flex gap-x-2">
-            <button class="btn btn-secondary grow">Add expense</button>
-            <button class="btn btn-outline btn-secondary md:hidden grow">
+          <div class="mt-4 md:mt-0 grid grid-cols-[auto_1fr] md:grid-cols-2 gap-x-2">
+            <button class="btn btn-secondary">Add expense</button>
+            <button @click.prevent onclick="modal_expenses.showModal()" class="btn btn-outline btn-accent">
               <span>View expenses</span>
               <span x-text="$store.dv_split.expenses.length" class="badge badge-secondary"></span>
             </button>
@@ -55,14 +60,181 @@
 
         <div class="divider md:hidden"></div>
 
-        <button @click="$store.dv_split.sayHello()" class="btn btn-primary w-full md:hidden">View Split Results</button>
+        <button onclick="modal_results.showModal()" class="btn btn-primary w-full md:hidden">View Split Results</button>
       </div>
-      <div></div>
+      <div class="hidden md:block">
+        <h3 class="dv-font-heading text-2xl mb-4">Results</h3>
+        <small x-show="!($store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1)">
+          Please add at least two
+          members and one expense to view your results!
+        </small>
+        <div class="flex flex-col" x-show="$store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1">
+          <div class="my-4">
+            <h4 class="text-4xl dv-font-heading flex items-center gap-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M7 11a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/>
+                  <path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0-4 0m5-5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                </g>
+              </svg>
+              <span x-text="`$${$store.dv_split.calcSplitTotal()}`"></span>
+            </h4>
+            <p>Evenly split between everyone!</p>
+          </div>
+          <div tabindex="0"
+               class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+            <div class="collapse-title font-medium">
+              Advanced details
+            </div>
+            <div class="collapse-content">
+              <ul class="flex flex-col gap-y-2">
+                <template x-for="expense in $store.dv_split.expenses">
+                  <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+                    <span x-text="expense.exp_name"></span>
+                    <span x-text="`$${expense.exp_amount}`"></span>
+                  </li>
+                </template>
+              </ul>
+              <p class="font-bold mt-4 ml-auto text-lg">
+                <span>Expense total:</span>
+                <span x-text="`$${$store.dv_split.calcExpTotal()}`"></span>
+              </p>
+              <div class="divider"></div>
+              <ul class="flex flex-col gap-y-2">
+                <template x-for="member in $store.dv_split.members">
+                  <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+                    <span x-text="member.mem_name"></span>
+                    <span x-text="`$${$store.dv_split.calcSplitTotal()}`"></span>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="modal-action">
       <form method="dialog">
         <button class="btn btn-outline btn-secondary">Close</button>
       </form>
     </div>
+  </div>
+  <div class="contents">
+    <dialog id="modal_members" class="modal">
+      <div class="modal-box max-w-sm">
+        <h3 class="dv-font-heading mb-4 text-2xl">Members</h3>
+        <small x-show="$store.dv_split.members.length < 1">No members. Try adding some!</small>
+        <ul class="mb-4 flex flex-col gap-y-2">
+          <template x-for="member in $store.dv_split.members" :key="member.mem_id">
+            <li class="flex justify-between py-2 items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+              <span x-text="member.mem_name"></span>
+              <button @click="$store.dv_split.removeMember(member.mem_id)" class="btn btn-sm btn-outline btn-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                </svg>
+              </button>
+            </li>
+          </template>
+        </ul>
+        <div class="modal-action">
+          <button @click="$store.dv_split.resetMembers()"
+                  :class="$store.dv_split.members.length < 1? 'btn-disabled': ''"
+                  class="btn mr-auto btn-outline btn-error">Clear all
+          </button>
+          <form method="dialog">
+            <button class="btn btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="modal_expenses" class="modal">
+      <div class="modal-box max-w-sm">
+        <h3 class="dv-font-heading mb-4 text-2xl">Expenses</h3>
+        <small x-show="$store.dv_split.expenses.length < 1">No expenses. Try adding some!</small>
+        <ul class="mb-4 flex flex-col gap-y-2">
+          <template x-for="expense in $store.dv_split.expenses" :key="expense.exp_id">
+            <li class="flex py-2 items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+              <span x-text="expense.exp_name"></span>
+              <span x-text="`$${expense.exp_amount}`" class="ml-auto mr-4"></span>
+              <button @click="$store.dv_split.removeExpense(expense.exp_id)" class="btn btn-sm btn-outline btn-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 7h16M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-5 5l4 4m0-4l-4 4"/>
+                </svg>
+              </button>
+            </li>
+          </template>
+        </ul>
+        <div class="modal-action">
+          <button @click="$store.dv_split.resetExpenses()"
+                  :class="$store.dv_split.expenses.length < 1? 'btn-disabled': ''"
+                  class="btn mr-auto btn-outline btn-error">Clear all
+          </button>
+          <form method="dialog">
+            <button class="btn btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="modal_results" class="modal">
+      <div class="modal-box">
+        <h3 class="dv-font-heading text-2xl mb-4">Results</h3>
+        <small x-show="!($store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1)">
+          Please add at least two
+          members and one expense to view your results!
+        </small>
+        <div class="flex flex-col" x-show="$store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1">
+          <div class="my-4">
+            <h4 class="text-4xl dv-font-heading flex items-center gap-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M7 11a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/>
+                  <path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0-4 0m5-5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                </g>
+              </svg>
+              <span x-text="`$${$store.dv_split.calcSplitTotal()}`"></span>
+            </h4>
+            <p>Evenly split between everyone!</p>
+          </div>
+          <div tabindex="0"
+               class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+            <div class="collapse-title font-medium">
+              Advanced details
+            </div>
+            <div class="collapse-content">
+              <ul class="flex flex-col gap-y-2">
+                <template x-for="expense in $store.dv_split.expenses">
+                  <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+                    <span x-text="expense.exp_name"></span>
+                    <span x-text="`$${expense.exp_amount}`"></span>
+                  </li>
+                </template>
+              </ul>
+              <p class="font-bold mt-4 ml-auto text-lg">
+                <span>Expense total:</span>
+                <span x-text="`$${$store.dv_split.calcExpTotal()}`"></span>
+              </p>
+              <div class="divider"></div>
+              <ul class="flex flex-col gap-y-2">
+                <template x-for="member in $store.dv_split.members">
+                  <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 last-of-type:border-none">
+                    <span x-text="member.mem_name"></span>
+                    <span x-text="`$${$store.dv_split.calcSplitTotal()}`"></span>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-outline btn-secondary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
   </div>
 </dialog>
