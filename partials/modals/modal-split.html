@@ -3,7 +3,7 @@
     <h3 class="text-2xl md:text-3xl lg:text-4xl mb-4 dv-font-heading text-center">
       Split evenly
     </h3>
-    <div role="alert" class="h-6 my-4">
+    <div role="alert" class="h-6 my-4 dark:text-base-100">
       <p x-transition x-show="$store.dv_split.isAlertVisible" id="split_alert" x-text="$store.dv_split.alertText"
          class="rounded text-center"></p>
     </div>
@@ -64,11 +64,11 @@
       </div>
       <div class="hidden md:block">
         <h3 class="dv-font-heading text-2xl mb-4">Results</h3>
-        <small x-show="!($store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1)">
+        <small x-show="!$store.dv_split.isResultValid()">
           Please add at least two
           members and one expense to view your results!
         </small>
-        <div class="flex flex-col" x-show="$store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1">
+        <div class="flex flex-col" x-show="$store.dv_split.isResultValid()">
           <div class="my-4">
             <h4 class="text-4xl dv-font-heading flex items-center gap-x-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24">
@@ -81,8 +81,8 @@
             </h4>
             <p>Evenly split between everyone!</p>
           </div>
-          <div tabindex="0"
-               class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+          <div class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+            <input aria-hidden="true" type="checkbox"/>
             <div class="collapse-title font-medium">
               Advanced details
             </div>
@@ -114,6 +114,15 @@
       </div>
     </div>
     <div class="modal-action">
+      <button @click="$store.dv_split.resetAll()" class="btn btn-neutral mr-auto">Reset</button>
+      <form @submit.prevent="" class="hidden md:flex flex-col md:flex-row items-center gap-x-2">
+        <label :class="!$store.dv_split.isResultValid()? 'input-disabled': ''" class="input input-bordered flex items-center mx-auto">
+          <input :readonly="!$store.dv_split.isResultValid()" type="text" required :value="$store.dv_split.divvyName">
+        </label>
+        <button :class="!$store.dv_split.isResultValid()? 'btn-disabled': ''" class="btn btn-success">Save
+          results
+        </button>
+      </form>
       <form method="dialog">
         <button class="btn btn-outline btn-secondary">Close</button>
       </form>
@@ -182,11 +191,11 @@
     <dialog id="modal_results" class="modal">
       <div class="modal-box">
         <h3 class="dv-font-heading text-2xl mb-4">Results</h3>
-        <small x-show="!($store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1)">
+        <small x-show="!$store.dv_split.isResultValid()">
           Please add at least two
           members and one expense to view your results!
         </small>
-        <div class="flex flex-col" x-show="$store.dv_split.members.length >= 2 && $store.dv_split.expenses.length >= 1">
+        <div class="flex flex-col" x-show="$store.dv_split.isResultValid()">
           <div class="my-4">
             <h4 class="text-4xl dv-font-heading flex items-center gap-x-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24">
@@ -199,8 +208,8 @@
             </h4>
             <p>Evenly split between everyone!</p>
           </div>
-          <div tabindex="0"
-               class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+          <div class="collapse rounded-md collapse-arrow border border-base-300 dark:border-gray-600 bg-base-100">
+            <input aria-hidden="true" type="checkbox"/>
             <div class="collapse-title font-medium">
               Advanced details
             </div>
@@ -229,9 +238,17 @@
             </div>
           </div>
         </div>
-        <div class="modal-action">
-          <form method="dialog">
-            <button class="btn btn-outline btn-secondary">Close</button>
+        <div class="modal-action flex-col">
+          <form @submit.prevent="" class="flex flex-col items-center gap-y-2 mb-4">
+            <label :class="!$store.dv_split.isResultValid()? 'input-disabled': ''" class="input input-bordered flex items-center w-full mx-auto">
+              <input :readonly="!$store.dv_split.isResultValid()" type="text" required :value="$store.dv_split.divvyName">
+            </label>
+            <button :class="!$store.dv_split.isResultValid()? 'btn-disabled': ''" class="btn w-full btn-success">Save
+              results
+            </button>
+          </form>
+          <form method="dialog" class="ml-0 flex">
+            <button class="btn btn-outline ml-auto btn-secondary">Close</button>
           </form>
         </div>
       </div>

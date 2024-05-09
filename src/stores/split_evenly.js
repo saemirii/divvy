@@ -4,16 +4,16 @@ import {capitalizeFirstLetter, roundUpToNearest} from "../util.js";
 /**
  * A single member to be used when splitting expenses
  * @typedef {Object} Member
- * @property {String} mem_id
- * @property {String} mem_name
+ * @property {string} mem_id
+ * @property {string} mem_name
  */
 
 /**
  * A single expenses to be used when splitting expenses
  * @typedef {Object} Expense
- * @property {String} exp_id
- * @property {String} exp_name
- * @property {Number} exp_amount
+ * @property {string} exp_id
+ * @property {string} exp_name
+ * @property {number} exp_amount
  */
 
 export const splitEvenly = {
@@ -29,10 +29,14 @@ export const splitEvenly = {
    */
   expenses: [],
 
+  divvyName: `dv_split_${nanoid(8)}`,
   isAlertVisible: false,
   alertText: "",
   alertTimeoutId: null,
   alertEl: document.getElementById('split_alert'),
+  isResultValid: function() {
+    return this.members.length >= 2 && this.expenses.length >= 1;
+  },
 
   /**
    * Creates a new member object and appends it to the members state array
@@ -140,6 +144,18 @@ export const splitEvenly = {
   },
 
   /**
+   * Reset state back to defaults
+   * @return null
+   */
+  resetAll() {
+    this.members = [];
+    this.expenses = [];
+    this.isAlertVisible = false;
+    this.alertText = "";
+    this.divvyName = `dv_split_${nanoid(8)}`;
+  },
+
+  /**
    * Calculate the total expenses
    * @return {number}
    */
@@ -184,8 +200,4 @@ export const splitEvenly = {
       this.alertText = "";
     }, 4500);
   },
-
-  sayHello() {
-    console.log(this.expenses)
-  }
 }
