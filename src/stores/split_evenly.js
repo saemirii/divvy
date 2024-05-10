@@ -34,6 +34,8 @@ export const splitEvenly = {
   alertText: "",
   alertTimeoutId: null,
   alertEl: document.getElementById('split_alert'),
+  isDivvyComplete: false,
+  saveBtnText: "Save results",
   isResultValid: function() {
     return this.members.length >= 2 && this.expenses.length >= 1;
   },
@@ -152,7 +154,23 @@ export const splitEvenly = {
     this.expenses = [];
     this.isAlertVisible = false;
     this.alertText = "";
+    this.saveBtnText = "Save results";
+    this.isDivvyComplete = false;
     this.divvyName = `dv_split_${nanoid(8)}`;
+  },
+
+  /**
+   * Save current state into local storage
+   */
+  saveDivvy() {
+    // perform logic to save state
+    const modalResults = document.getElementById('modal_results');
+    this.isDivvyComplete = true;
+    this.saveBtnText = "Saved!";
+    this.showAlert(`${this.divvyName} Saved!`, false)
+    if(modalResults.open) {
+      modalResults.close();
+    }
   },
 
   /**
@@ -177,7 +195,7 @@ export const splitEvenly = {
   },
 
   /**
-   * Triggers the alert element to show and hides it after 3 seconds
+   * Triggers the alert element to show and hides it after 4.5 seconds
    * @param {String} message
    * @param {boolean} isError
    * @return null
