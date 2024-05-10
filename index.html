@@ -15,7 +15,11 @@
 <body>
 <div class="dv-wrapper">
   {{> header }}
-  <main id="dv-main" class="h-full" hx-get="/home.html" hx-trigger="load" hx-target="#dv-main" hx-swap="innerHTML"></main>
+  <main class="h-full grid grid-rows-[auto_1fr_auto_auto]">
+    {{> sections/about }}
+    {{> sections/cta }}
+    {{> sections/socials }}
+  </main>
   {{> footer }}
 </div>
 <div id="dialog-container" class="contents">
