@@ -9,6 +9,26 @@ Group expense tracking & splitting
 Divvy is a personal side project. It was built primarily for my own personal educational purposes and as a
 way to showcase my skills with particular technologies (see tech stack).
 
+### Cloning
+
+> You will need to have Node.js installed to run this project. Click [here](https://nodejs.org/en/download) for details
+
+Clone the project using whichever method you prefer, after cloning install dependencies:
+
+```shell
+cd divvy && npm i
+```
+or if you're already in the divvy directory
+```shell
+npm i
+```
+
+Start up development server
+
+```shell
+npm run dev
+```
+
 ## Description
 
 Divvy's primary goal is to track and split expenses between groups of people. Simply add participating
